@@ -97,7 +97,7 @@ for status_code in successful_responses:
 
 
 """
-dir of requests.get object:
+dir of requests.get  object:
 apparent_encoding
 close
 connection
