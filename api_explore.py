@@ -10,6 +10,8 @@ As each item in the quickstart is learned, they will be turned in a function to 
 
 # Quickstart
 import requests
+from PIL import Image
+from io import BytesIO
 
 ROOT_URL = 'https://httpbin.org/'
 TIMEOUT = 1 # Seconds
@@ -22,7 +24,9 @@ def Make_a_Request():
     r_patch = requests.patch('{}patch'.format(ROOT_URL))
     r_post = requests.post('{}post'.format(ROOT_URL))
     r_put = requests.put('{}put'.format(ROOT_URL))
-    return [r_delete, r_get, r_patch, r_post, r_put]
+    r_get_image = requests.get('{}/image/jpeg'.format(ROOT_URL))
+
+    return [r_delete, r_get, r_patch, r_post, r_put, r_get_image]
 
 def Passing_Parameters_In_URLs():
     PAYLOAD = {'key1':'value1', 'key2':'value2', 'key3': ['value3_1','value3_2']}
@@ -37,15 +41,17 @@ def Response_Content():
     print("Encoding: {}".format(r_delete.encoding))
     print(type(r_delete.text)) # returns str
 
-# Binary Response Content
+def Binary_Response_Content():
+    r_image = Make_a_Request()[5]
+    r_image = r_image.content
+    print(r_image)
+    with Image.open(BytesIO(r_image)) as i:
+        print(i)
 
 def JSON_Response_Content():
+    r_delete = Make_a_Request()[0]
     print(r_delete.json())
     print(type(r_delete.json())) # returns dict
-
-# JSON Response Content
-print(r_delete.json())
-print(type(r_delete.json())) # returns dict
 
 # Raw Response Content
 # Custom Headers
@@ -134,7 +140,7 @@ url
 def main():
     """ To run individual parts of this script, place the funciton here.
     """
-    Response_Content()
+    Binary_Response_Content()
 
 
 if __name__ == "__main__":
