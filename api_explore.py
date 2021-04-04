@@ -129,6 +129,13 @@ status_code
 text
 url
 
-
-
 """
+
+def main():
+    """ To run individual parts of this script, place the funciton here.
+    """
+    Response_Content()
+
+
+if __name__ == "__main__":
+    main()
